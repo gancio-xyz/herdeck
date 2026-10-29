@@ -1,0 +1,16 @@
+fyne.io/systray v1.12.2 h1:Y8DZxgLHsVQt6rY9Zrkkg+j67S7vv/1F2viOWKPpVeA=
+fyne.io/systray v1.12.2/go.mod h1:RVwqP9nYMo7h5zViCBHri2FgjXF7H2cub7MAq4NSoLs=
+github.com/ebitengine/purego v0.10.2 h1:W809HbnvzAxgdm+aOvlSekrM16wGCdT/e76+9tS7gzE=
+github.com/ebitengine/purego v0.10.2/go.mod h1:iIjxzd6CiRiOG0UyXP+V1+jWqUXVjPKLAI0mRfJZTmQ=
+github.com/godbus/dbus/v5 v5.1.0 h1:4KLkAxT3aOY8Li4FRJe/KvhoNFFxo0m6fNuFUO8QJUk=
+github.com/godbus/dbus/v5 v5.1.0/go.mod h1:xhWf0FNVPg57R7Z0UbKHbJfkEywrmjJnf7w5xrFpKfA=
+golang.org/x/image v0.47.0 h1:za/8gVz++PPZqmZJBNSISICN5Rrj5zixP/8K++fgmqo=
+golang.org/x/image v0.47.0/go.mod h1:IkN5o4A7vq55vXN8FWjjnhg9Rs2GOtffqsSi9mWAKYE=
+golang.org/x/sys v0.49.0 h1:XbzkgYJHdqh/8m2Uu0W/dQv8nktxx4BFHp1M0gROTXA=
+golang.org/x/sys v0.49.0/go.mod h1:hNLxWAXmnKAxqDtdwIYC4bM9oQPEecfsnNMuSxOs3og=
+golang.org/x/text v0.43.0 h1:1QivrlhwAsnMOcqgOdl9my7s9OyZl8O5/UGUTJVXoWc=
+golang.org/x/text v0.43.0/go.mod h1:hbSIYA/amXcRXTFSZqh8tWHEoqRvvbKPJ2uz/KU+a+s=
+rafaelmartins.com/p/streamdeck v0.0.0-20260905040856-709e442a380b h1:TbJXQMGG9NAOfLyNbeU9IW3nNZmxj5UsbMt0Pzz1Mj4=
+rafaelmartins.com/p/streamdeck v0.0.0-20260905040856-709e442a380b/go.mod h1:mV5U6bpbaY8G02MxQEZfR9qLyd1zGxKc3GyCuW1BMT8=
+rafaelmartins.com/p/usbhid v0.0.0-20260811025057-543484740bef h1:R1IycbWCVegqAyyMyO7/bRKQjYi0aTvFX1kayxwWYko=
+rafaelmartins.com/p/usbhid v0.0.0-20260811025057-543484740bef/go.mod h1:Rta/iJgy+IuDjpHCBFwHKTNDfHI2i2z7HfO/re/sOV8=

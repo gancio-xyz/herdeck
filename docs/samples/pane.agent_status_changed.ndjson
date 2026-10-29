@@ -1,0 +1,3 @@
+{"data":{"agent":"probe","agent_status":"working","custom_status":"probing","pane_id":"w2X:p1","workspace_id":"w2X"},"event":"pane.agent_status_changed"}
+{"data":{"agent":"probe","agent_status":"blocked","pane_id":"w2X:p1","workspace_id":"w2X"},"event":"pane.agent_status_changed"}
+{"data":{"agent_status":"unknown","pane_id":"w2X:p1","workspace_id":"w2X"},"event":"pane.agent_status_changed"}

@@ -1,0 +1,4 @@
+bin/
+*.app/
+dist/
+.DS_Store
