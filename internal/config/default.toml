@@ -1,0 +1,40 @@
+# herdeck configuration (~/.config/herdeck/config.toml)
+# Every key is optional; these are the defaults.
+
+[herdr]
+session = ""             # empty = default herdr session
+
+[deck]
+serial = ""              # empty = first Stream Deck Neo found (see `herdeck devices`)
+brightness = 70
+dim_after_minutes = 10   # dim when nothing changed for this long; 0 disables
+dim_brightness = 20
+
+[layout]
+sort = "state"           # state (blocked first) | workspace (herdr order) | stable (first seen)
+long_press_ms = 600
+show_idle = true         # show workspaces whose agents are all idle
+animate_blocked = true   # pulse the border of blocked keys
+
+[colors]
+working = "#2F6FEB"
+blocked = "#F5A524"
+done    = "#2DA44E"
+idle    = "#3A3A3A"
+
+[focus]
+# macOS app to bring to the front after focusing a workspace, e.g. "Terminal",
+# "Ghostty", "iTerm". "auto" picks the first running known terminal; "" disables.
+activate_app = "auto"
+
+[reply]
+# Quick reply: long-press a blocked key to arm it, press it again to send the
+# approve keys, or touch a touch point to send the deny keys.
+# OFF by default. Keys are per agent type and have no built-in defaults.
+enabled = false
+
+# Example for Claude Code. VERIFY against the Claude Code version you run:
+# the permission prompt's keys have changed between releases.
+# [reply.agents.claude]
+# approve_keys = ["Enter"]
+# deny_keys    = ["Escape"]
