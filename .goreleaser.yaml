@@ -1,0 +1,57 @@
+# goreleaser v2. Replace OWNER with the GitHub user/org before the first release.
+version: 2
+project_name: herdeck
+
+builds:
+  - id: darwin
+    main: ./cmd/herdeck
+    goos: [darwin]
+    goarch: [arm64, amd64]
+    env: [CGO_ENABLED=1]
+    ldflags: ["-s -w -X main.version={{.Version}}"]
+  - id: linux
+    main: ./cmd/herdeck
+    goos: [linux]
+    goarch: [amd64, arm64]
+    env: [CGO_ENABLED=0]
+    ldflags: ["-s -w -X main.version={{.Version}}"]
+
+universal_binaries:
+  - id: darwin
+    ids: [darwin]
+    replace: false
+
+archives:
+  - id: default
+    formats: [tar.gz]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ if eq .Arch \"all\" }}universal{{ else }}{{ .Arch }}{{ end }}"
+    files:
+      - LICENSE
+      - README.md
+      - contrib/*
+
+checksum:
+  name_template: checksums.txt
+
+changelog:
+  sort: asc
+
+brews:
+  - name: herdeck
+    ids: [default]
+    repository:
+      owner: OWNER
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+    homepage: https://github.com/OWNER/herdeck
+    description: herdr agent status and control on an Elgato Stream Deck Neo
+    license: Apache-2.0
+    install: |
+      bin.install "herdeck"
+    caveats: |
+      Quit the Elgato Stream Deck app first (the deck allows one client), then:
+        herdeck doctor
+        herdeck            # menu bar app
+        herdeck service install   # start at login
+    test: |
+      system "#{bin}/herdeck", "version"

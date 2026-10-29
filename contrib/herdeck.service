@@ -1,0 +1,13 @@
+# systemd user unit (also written by `herdeck service install`).
+# Install: cp herdeck.service ~/.config/systemd/user/ && systemctl --user enable --now herdeck
+[Unit]
+Description=herdeck: herdr status on a Stream Deck Neo
+After=graphical-session.target
+
+[Service]
+ExecStart=%h/.local/bin/herdeck run --headless
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target

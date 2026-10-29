@@ -14,6 +14,8 @@ Working name: `herdeck` (rename freely before the first public release).
 4. **State strategy: refetch, don't apply deltas.** Lifecycle event subscriptions replay old history, so they only *trigger* a debounced refetch of `workspace.list` + `agent.list`. Low-latency status comes from per-pane `pane.agent_status_changed` subscriptions (re-subscribed when the pane set changes), plus a 2 s safety poll.
 5. Default `focus.activate_app` to the terminal herdeck detects at install (the human uses Apple Terminal). Keep it configurable.
 6. Key labels: workspace label with the prefix shared by all labels removed (e.g. `myrepo TICKET-320` → `TICKET-320`).
+7. **License:** herdr is AGPL-3.0-or-later (or commercial), not Apache-2.0 as §2 assumed. herdeck stays Apache-2.0: it only talks to herdr over its socket API and links no herdr code.
+8. **Quick-reply safety additions** (from code review): arming is cancelled the moment the armed agent leaves `blocked` (or its pane is reused by another terminal); all input is ignored while herdr is disconnected; any other key, including an empty slot, disarms.
 
 ---
 
