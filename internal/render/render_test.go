@@ -96,11 +96,18 @@ func checkGolden(t *testing.T, name string, img image.Image) {
 	b := img.Bounds()
 	for y := b.Min.Y; y < b.Max.Y; y++ {
 		for x := b.Min.X; x < b.Max.X; x++ {
-			if g, w := color.RGBAModel.Convert(img.At(x, y)), color.RGBAModel.Convert(want.At(x, y)); g != w {
+			if g, w := color.RGBAModel.Convert(img.At(x, y)).(color.RGBA), color.RGBAModel.Convert(want.At(x, y)).(color.RGBA); !near(g, w) {
 				t.Fatalf("%s: pixel (%d,%d) = %v, want %v (run -update if intended)", name, x, y, g, w)
 			}
 		}
 	}
+}
+
+// near allows ±2 per channel: float rounding (FMA) differs between arm64,
+// where the goldens are generated, and amd64.
+func near(a, b color.RGBA) bool {
+	d := func(x, y uint8) bool { return x-y <= 2 || y-x <= 2 }
+	return d(a.R, b.R) && d(a.G, b.G) && d(a.B, b.B) && d(a.A, b.A)
 }
 
 func TestGolden(t *testing.T) {
