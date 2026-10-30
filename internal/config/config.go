@@ -43,6 +43,7 @@ type Layout struct {
 	Sort           string `toml:"sort"` // state | workspace | stable
 	LongPressMS    int    `toml:"long_press_ms"`
 	ShowIdle       bool   `toml:"show_idle"`
+	ShowTerminals  bool   `toml:"show_terminals"` // workspaces without an agent
 	AnimateBlocked bool   `toml:"animate_blocked"`
 }
 

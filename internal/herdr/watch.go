@@ -294,6 +294,8 @@ func (c *Client) session(parent context.Context, out chan<- Update, reportedDown
 			err = refetch()
 		case <-poll.C:
 			err = refetch()
+		case <-c.kick:
+			err = refetch()
 		}
 		if err != nil {
 			return true, err

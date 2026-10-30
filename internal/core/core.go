@@ -21,6 +21,7 @@ type Options struct {
 	Sort           string // state | workspace | stable
 	LongPress      time.Duration
 	ShowIdle       bool
+	ShowTerminals  bool // also show workspaces without an agent
 	AnimateBlocked bool
 	Brightness     int
 	DimAfter       time.Duration // 0 disables dimming
@@ -409,7 +410,7 @@ func urgentAgent(ws model.Workspace) (model.Agent, bool) {
 
 func (m *Model) workspace(id string) (model.Workspace, bool) {
 	for _, ws := range m.snap.Workspaces {
-		if ws.ID == id && len(ws.Agents) > 0 {
+		if ws.ID == id && (len(ws.Agents) > 0 || m.opts.ShowTerminals) {
 			return ws, true
 		}
 	}
@@ -436,14 +437,14 @@ func (m *Model) agentStatus(paneID string) (model.Status, bool) {
 func (m *Model) visible() []model.Workspace {
 	var out []model.Workspace
 	for _, ws := range m.snap.Workspaces {
-		if len(ws.Agents) == 0 {
+		if len(ws.Agents) == 0 && !m.opts.ShowTerminals {
 			continue
 		}
 		if _, ok := m.seen[ws.ID]; !ok {
 			m.seq++
 			m.seen[ws.ID] = m.seq
 		}
-		if st := wsStatus(ws); !m.opts.ShowIdle && (st == model.StatusIdle || st == model.StatusUnknown) {
+		if st := wsStatus(ws); len(ws.Agents) > 0 && !m.opts.ShowIdle && (st == model.StatusIdle || st == model.StatusUnknown) {
 			continue
 		}
 		out = append(out, ws)
@@ -576,6 +577,14 @@ func (m *Model) shortPress(now time.Time, wsID string) []Cmd {
 func (m *Model) focus(now time.Time, ws model.Workspace) []Cmd {
 	m.selected = ws.ID
 	a, _ := urgentAgent(ws)
+	// Show the new focus immediately; the next snapshot confirms or corrects it.
+	for wi := range m.snap.Workspaces {
+		w := &m.snap.Workspaces[wi]
+		w.Focused = w.ID == ws.ID
+		for ai := range w.Agents {
+			w.Agents[ai].Focused = w.Agents[ai].PaneID == a.PaneID
+		}
+	}
 	return []Cmd{FocusCmd{WorkspaceID: ws.ID, PaneID: a.PaneID}}
 }
 
@@ -587,7 +596,11 @@ func (m *Model) longPress(now time.Time, wsID string) []Cmd {
 		return nil
 	}
 	m.selected = ws.ID
-	a, _ := urgentAgent(ws)
+	a, ok := urgentAgent(ws)
+	if !ok {
+		m.flash(now, "no agent in this workspace")
+		return nil
+	}
 	if m.opts.ReplyEnabled && a.Status == model.StatusBlocked {
 		if keys, ok := m.opts.ReplyKeys[a.Name]; ok && len(keys.Approve) > 0 {
 			m.armed = &armed{wsID: ws.ID, paneID: a.PaneID, terminalID: a.TerminalID, agent: a.Name, until: now.Add(m.opts.OverlayFor)}
@@ -790,7 +803,12 @@ func (m *Model) View(now time.Time) View {
 		if sub == "" {
 			sub = a.Name
 		}
-		t := render.Tile{Title: title, Subtitle: sub, Status: st, Focused: ws.Focused, Count: len(ws.Agents)}
+		if len(ws.Agents) == 0 {
+			sub = "terminal"
+		}
+		p := m.presses[i]
+		t := render.Tile{Title: title, Subtitle: sub, Status: st, Focused: ws.Focused, Count: len(ws.Agents),
+			Pressed: p.down && !p.fired && p.wsID == ws.ID}
 		if st == model.StatusBlocked {
 			t.Pulse = pulse
 		}

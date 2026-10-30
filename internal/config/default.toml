@@ -14,6 +14,7 @@ dim_brightness = 20
 sort = "state"           # state (blocked first) | workspace (herdr order) | stable (first seen)
 long_press_ms = 600
 show_idle = true         # show workspaces whose agents are all idle
+show_terminals = true    # show workspaces with no agent (plain shells), dimmed and last
 animate_blocked = true   # pulse the border of blocked keys
 
 [colors]

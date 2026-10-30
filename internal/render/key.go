@@ -68,6 +68,9 @@ func Key(t Tile, th Theme) image.Image {
 	if t.Alert {
 		bg = th.Alert
 	}
+	if t.Pressed {
+		bg = mix(bg, white, 0.35)
+	}
 	fg := textColor(bg)
 	fill(img, full, bg)
 

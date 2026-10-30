@@ -81,6 +81,7 @@ func CoreOptions(c config.Config) core.Options {
 		Sort:           c.Layout.Sort,
 		LongPress:      c.Layout.LongPress(),
 		ShowIdle:       c.Layout.ShowIdle,
+		ShowTerminals:  c.Layout.ShowTerminals,
 		AnimateBlocked: c.Layout.AnimateBlocked,
 		Brightness:     c.Deck.Brightness,
 		DimAfter:       c.Deck.DimAfter(),
@@ -195,7 +196,11 @@ func (a *App) Run(ctx context.Context) error {
 		for _, c := range a.step(msg, now) {
 			go a.exec(prod, c, results)
 		}
-		if _, isTick := msg.(core.TickMsg); isTick || a.opts.Now().Sub(a.lastPaint) >= frameEvery {
+		// Input repaints immediately (press feedback); everything else is
+		// capped at ~30 fps, with ticks catching up.
+		_, isTick := msg.(core.TickMsg)
+		_, isInput := msg.(core.InputMsg)
+		if isTick || isInput || a.opts.Now().Sub(a.lastPaint) >= frameEvery {
 			a.paint(a.opts.Now())
 		}
 	}

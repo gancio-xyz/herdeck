@@ -37,6 +37,10 @@ type Client struct {
 	pollInterval time.Duration // safety poll
 	backoffBase  time.Duration
 	backoffCap   time.Duration
+
+	// kick asks the running Watch session for an immediate refetch, e.g.
+	// right after a focus so the deck doesn't wait for the safety poll.
+	kick chan struct{}
 }
 
 // New returns a client for the herdr socket at socketPath.
@@ -46,9 +50,18 @@ func New(socketPath string) *Client {
 		callTimeout:  defaultCallTimeout,
 		debounce:     150 * time.Millisecond,
 		minRefetch:   250 * time.Millisecond,
-		pollInterval: 2 * time.Second,
+		pollInterval: time.Second,
 		backoffBase:  250 * time.Millisecond,
 		backoffCap:   10 * time.Second,
+		kick:         make(chan struct{}, 1),
+	}
+}
+
+// Refresh makes Watch refetch the snapshot now. Never blocks.
+func (c *Client) Refresh() {
+	select {
+	case c.kick <- struct{}{}:
+	default:
 	}
 }
 
@@ -297,11 +310,19 @@ func buildSnapshot(ws []wireWorkspace, as []wireAgent) model.Snapshot {
 }
 
 func (c *Client) FocusWorkspace(ctx context.Context, workspaceID string) error {
-	return c.Call(ctx, "workspace.focus", map[string]string{"workspace_id": workspaceID}, nil)
+	err := c.Call(ctx, "workspace.focus", map[string]string{"workspace_id": workspaceID}, nil)
+	if err == nil {
+		c.Refresh()
+	}
+	return err
 }
 
 func (c *Client) FocusAgent(ctx context.Context, paneID string) error {
-	return c.Call(ctx, "agent.focus", map[string]string{"target": paneID}, nil)
+	err := c.Call(ctx, "agent.focus", map[string]string{"target": paneID}, nil)
+	if err == nil {
+		c.Refresh()
+	}
+	return err
 }
 
 // ansiRE matches CSI, OSC (BEL or ST terminated) and other ESC sequences.

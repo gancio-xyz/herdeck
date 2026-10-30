@@ -34,6 +34,7 @@ type Tile struct {
 	Alert    bool         // reply failed: Alert-colored background
 	Pulse    int          // 0..3 animation phase for blocked tiles' border; 0 = no border highlight
 	Count    int          // number of agents in the workspace; badge shown when > 1
+	Pressed  bool         // key is held down: brightened background as instant feedback
 }
 
 // InfoBar is the content of the 248x58 info bar: up to two lines.

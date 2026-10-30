@@ -558,3 +558,44 @@ func TestReplySendFailedAlerts(t *testing.T) {
 		t.Fatalf("got %+v %+v", v.Keys[0], v.Bar)
 	}
 }
+
+func TestTerminalsShownDimmedAndLast(t *testing.T) {
+	o := defaultOpts()
+	o.ShowTerminals = true
+	h := newHarness(t, o, model.Workspace{ID: "t", Number: 1, Label: "myrepo"}, ws("a", 2, "alpha", model.StatusIdle))
+	keys := h.view().Keys
+	if keys[0].Title != "alpha" || keys[1].Title != "myrepo" || keys[1].Subtitle != "terminal" || keys[1].Status != model.StatusUnknown {
+		t.Fatalf("keys: %+v %+v", keys[0], keys[1])
+	}
+	if cmds := h.press(1, 100*time.Millisecond); !reflect.DeepEqual(cmds, []Cmd{FocusCmd{WorkspaceID: "t"}}) {
+		t.Fatalf("tap terminal: %#v", cmds)
+	}
+	if cmds := h.press(1, 700*time.Millisecond); cmds != nil {
+		t.Fatalf("long-press terminal: %#v", cmds)
+	}
+
+	o.ShowTerminals = false
+	h = newHarness(t, o, model.Workspace{ID: "t", Number: 1, Label: "myrepo"}, ws("a", 2, "alpha", model.StatusIdle))
+	if got := h.titles(); !reflect.DeepEqual(got, []string{"alpha"}) {
+		t.Fatalf("hidden: %v", got)
+	}
+}
+
+func TestPressFeedbackAndOptimisticFocus(t *testing.T) {
+	h := newHarness(t, defaultOpts(), ws("a", 1, "alpha", model.StatusWorking), ws("b", 2, "bravo", model.StatusWorking))
+	h.send(InputMsg{Kind: KeyDown, Index: 1})
+	if k := h.view().Keys[1]; !k.Pressed {
+		t.Fatal("held key should render pressed")
+	}
+	h.send(InputMsg{Kind: KeyUp, Index: 1})
+	v := h.view()
+	if v.Keys[1].Pressed || !v.Keys[1].Focused || v.Keys[0].Focused {
+		t.Fatalf("after tap: %+v %+v", v.Keys[0], v.Keys[1])
+	}
+	// A long press stops showing pressed once it fires.
+	h.send(InputMsg{Kind: KeyDown, Index: 0})
+	h.advance(700 * time.Millisecond)
+	if h.view().Keys[0].Pressed {
+		t.Fatal("pressed should clear when the long press fires")
+	}
+}
