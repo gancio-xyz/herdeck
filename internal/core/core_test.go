@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"herdeck/internal/model"
+	"github.com/gancio-xyz/herdeck/internal/model"
 )
 
 var t0 = time.Date(2026, 10, 29, 12, 0, 0, 0, time.UTC)

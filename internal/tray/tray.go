@@ -12,11 +12,11 @@ import (
 
 	"fyne.io/systray"
 
-	"herdeck/internal/config"
-	"herdeck/internal/core"
-	"herdeck/internal/model"
-	"herdeck/internal/render"
-	"herdeck/internal/service"
+	"github.com/gancio-xyz/herdeck/internal/config"
+	"github.com/gancio-xyz/herdeck/internal/core"
+	"github.com/gancio-xyz/herdeck/internal/model"
+	"github.com/gancio-xyz/herdeck/internal/render"
+	"github.com/gancio-xyz/herdeck/internal/service"
 )
 
 // maxItems is the size of the pre-built workspace item pool. systray menu

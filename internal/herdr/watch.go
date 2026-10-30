@@ -13,7 +13,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"herdeck/internal/model"
+	"github.com/gancio-xyz/herdeck/internal/model"
 )
 
 // lifecycleTypes only trigger refetches; *.focused is left out because it

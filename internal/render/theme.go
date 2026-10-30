@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"herdeck/internal/model"
+	"github.com/gancio-xyz/herdeck/internal/model"
 )
 
 // DefaultTheme is the built-in palette.

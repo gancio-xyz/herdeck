@@ -7,11 +7,11 @@ import (
 	"os"
 	"time"
 
-	"herdeck/internal/app"
-	"herdeck/internal/config"
-	"herdeck/internal/deck"
-	"herdeck/internal/herdr"
-	"herdeck/internal/model"
+	"github.com/gancio-xyz/herdeck/internal/app"
+	"github.com/gancio-xyz/herdeck/internal/config"
+	"github.com/gancio-xyz/herdeck/internal/deck"
+	"github.com/gancio-xyz/herdeck/internal/herdr"
+	"github.com/gancio-xyz/herdeck/internal/model"
 )
 
 // doctor prints one line per check and returns whether everything is usable.

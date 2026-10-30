@@ -12,12 +12,12 @@ import (
 	"strings"
 	"time"
 
-	"herdeck/internal/config"
-	"herdeck/internal/core"
-	"herdeck/internal/deck"
-	"herdeck/internal/herdr"
-	"herdeck/internal/model"
-	"herdeck/internal/render"
+	"github.com/gancio-xyz/herdeck/internal/config"
+	"github.com/gancio-xyz/herdeck/internal/core"
+	"github.com/gancio-xyz/herdeck/internal/deck"
+	"github.com/gancio-xyz/herdeck/internal/herdr"
+	"github.com/gancio-xyz/herdeck/internal/model"
+	"github.com/gancio-xyz/herdeck/internal/render"
 )
 
 const (

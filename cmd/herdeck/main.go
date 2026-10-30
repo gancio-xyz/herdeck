@@ -14,13 +14,13 @@ import (
 	"sync/atomic"
 	"syscall"
 
-	"herdeck/internal/app"
-	"herdeck/internal/config"
-	"herdeck/internal/core"
-	"herdeck/internal/deck"
-	"herdeck/internal/herdr"
-	"herdeck/internal/service"
-	"herdeck/internal/tray"
+	"github.com/gancio-xyz/herdeck/internal/app"
+	"github.com/gancio-xyz/herdeck/internal/config"
+	"github.com/gancio-xyz/herdeck/internal/core"
+	"github.com/gancio-xyz/herdeck/internal/deck"
+	"github.com/gancio-xyz/herdeck/internal/herdr"
+	"github.com/gancio-xyz/herdeck/internal/service"
+	"github.com/gancio-xyz/herdeck/internal/tray"
 )
 
 // version is set by the release build (-ldflags "-X main.version=...").

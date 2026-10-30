@@ -6,7 +6,7 @@ package herdr
 import (
 	"context"
 
-	"herdeck/internal/model"
+	"github.com/gancio-xyz/herdeck/internal/model"
 )
 
 // UpdateKind tells which field of an Update is set.

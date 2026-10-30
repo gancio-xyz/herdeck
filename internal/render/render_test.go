@@ -12,7 +12,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"herdeck/internal/model"
+	"github.com/gancio-xyz/herdeck/internal/model"
 )
 
 var update = flag.Bool("update", false, "regenerate golden images and the contact sheet")

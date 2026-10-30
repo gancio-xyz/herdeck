@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"herdeck/internal/model"
-	"herdeck/internal/render"
+	"github.com/gancio-xyz/herdeck/internal/model"
+	"github.com/gancio-xyz/herdeck/internal/render"
 )
 
 // Keys per page on the Neo.

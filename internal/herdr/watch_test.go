@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"herdeck/internal/herdr/herdrtest"
-	"herdeck/internal/model"
+	"github.com/gancio-xyz/herdeck/internal/herdr/herdrtest"
+	"github.com/gancio-xyz/herdeck/internal/model"
 )
 
 const waitTimeout = 3 * time.Second

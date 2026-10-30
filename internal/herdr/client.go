@@ -20,7 +20,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"herdeck/internal/model"
+	"github.com/gancio-xyz/herdeck/internal/model"
 )
 
 const defaultCallTimeout = 3 * time.Second

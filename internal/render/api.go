@@ -7,7 +7,7 @@ package render
 import (
 	"image/color"
 
-	"herdeck/internal/model"
+	"github.com/gancio-xyz/herdeck/internal/model"
 )
 
 // Theme holds the palette. Zero-valued fields fall back to DefaultTheme.

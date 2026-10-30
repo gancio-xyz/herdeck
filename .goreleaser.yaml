@@ -1,4 +1,4 @@
-# goreleaser v2. Replace OWNER with the GitHub user/org before the first release.
+# goreleaser v2.
 version: 2
 project_name: herdeck
 
@@ -39,11 +39,13 @@ changelog:
 brews:
   - name: herdeck
     ids: [default]
+    # Publishing needs the HOMEBREW_TAP_TOKEN secret; without it the formula is skipped.
+    skip_upload: '{{ if isEnvSet "HOMEBREW_TAP_TOKEN" }}false{{ else }}true{{ end }}'
     repository:
-      owner: OWNER
+      owner: gancio-xyz
       name: homebrew-tap
       token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
-    homepage: https://github.com/OWNER/herdeck
+    homepage: https://github.com/gancio-xyz/herdeck
     description: herdr agent status and control on an Elgato Stream Deck Neo
     license: Apache-2.0
     install: |

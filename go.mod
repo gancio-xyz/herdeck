@@ -1,4 +1,4 @@
-module herdeck
+module github.com/gancio-xyz/herdeck
 
 go 1.26.4
 
